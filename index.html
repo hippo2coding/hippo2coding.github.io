@@ -63,7 +63,9 @@
     background:var(--paper); color:var(--ink);
     font-family:"IBM Plex Sans KR","IBM Plex Sans",system-ui,sans-serif;
     line-height:1.68; -webkit-font-smoothing:antialiased;
+    word-break:keep-all; overflow-wrap:break-word;
   }
+  p, li, dd, figcaption{ text-wrap:pretty; }
   h1,h2,h3,h4{text-wrap:balance; margin:0;}
   p{margin:0;}
   a{color:var(--copper); text-decoration:none;}
@@ -75,8 +77,9 @@
 
   /* ---- section frame ---- */
   .sec-label{
-    font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    font-family:"IBM Plex Mono",monospace; font-size:12px; text-transform:uppercase;
     color:var(--slate); font-weight:600; padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:28px;
+    letter-spacing:.06em;
   }
 
   /* ---- hero ---- */
@@ -90,7 +93,7 @@
     display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
   }
   .hero h1 .handle{font-family:"IBM Plex Mono",monospace; font-weight:500; font-size:0.4em; color:var(--slate);}
-  .lede{font-size:18px; color:var(--ink-soft); max-width:60ch;}
+  .lede{font-size:18px; color:var(--ink-soft); max-width:50ch;}
   .lede b{color:var(--ink); font-weight:600;}
   .hero-foot{display:flex; flex-wrap:wrap; gap:26px; align-items:flex-end; justify-content:space-between; margin-top:6px;}
   .gh-link{
@@ -144,14 +147,14 @@
   }
   .role-line b{color:var(--ink); font-weight:600;}
   .phase{
-    font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.1em; font-weight:600;
+    font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.04em; font-weight:600;
     color:var(--copper); display:block; margin-top:6px;
   }
   .phase .sub{color:var(--slate); font-weight:400; letter-spacing:0;}
 
   /* contribution bars */
   .contrib{background:var(--surface); border-radius:8px; padding:18px 20px; display:flex; flex-direction:column; gap:11px;}
-  .contrib-h{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.08em; color:var(--slate); text-transform:uppercase;}
+  .contrib-h{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.03em; color:var(--slate); text-transform:uppercase;}
   .bar-row{display:grid; grid-template-columns:112px 1fr 42px; align-items:center; gap:12px; font-size:12.5px;}
   .bar-row .nm{font-family:"IBM Plex Mono",monospace; color:var(--ink-soft);}
   .bar-track{background:var(--surface-2); border-radius:3px; height:9px; overflow:hidden;}
@@ -191,7 +194,7 @@
 
   /* ---- credential ---- */
   .cred{display:grid; grid-template-columns:auto 1fr; gap:9px 20px; background:var(--surface); border-radius:8px; padding:20px 22px;}
-  .cred dt{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--slate); letter-spacing:.06em; padding-top:2px;}
+  .cred dt{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--slate); letter-spacing:.02em; padding-top:2px;}
   .cred dd{margin:0; font-size:14px; color:var(--ink-soft);}
   .cred dd b{color:var(--ink); font-weight:600;}
 
@@ -285,7 +288,7 @@
     <p class="eyebrow">SK NETWORKS FAMILY AI CAMP 28기 · 2026.02.26 – 08.21 수료</p>
     <h1>김성재 <span class="handle">@hippo2coding</span></h1>
     <p class="lede">
-      LLM 애플리케이션의 <b>백엔드</b>를 만듭니다. 에이전트 런타임과 RAG 파이프라인,
+      LLM 애플리케이션의 <b>백엔드</b>를 만듭니다. 에이전트 런타임과 RAG 파이프라인,
       그리고 그것이 정말 작동하는지 확인하는 <b>평가 체계</b>까지 함께 만듭니다.
     </p>
     <div class="hero-foot">
