@@ -155,7 +155,7 @@
   .bar-row{display:grid; grid-template-columns:112px 1fr 42px; align-items:center; gap:12px; font-size:12.5px;}
   .bar-row .nm{font-family:"IBM Plex Mono",monospace; color:var(--ink-soft);}
   .bar-track{background:var(--surface-2); border-radius:3px; height:9px; overflow:hidden;}
-  .bar-fill{background:var(--copper); height:100%; border-radius:3px;}
+  .bar-fill{background:var(--copper); height:100%; border-radius:3px; display:block;}
   .bar-row .ct{font-family:"IBM Plex Mono",monospace; color:var(--slate); text-align:right; font-variant-numeric:tabular-nums;}
 
   /* images */
@@ -198,6 +198,37 @@
   footer{border-top:1px solid var(--line); padding-top:30px; display:flex; flex-direction:column; gap:12px;}
   footer p{font-size:13px; color:var(--slate); max-width:64ch;}
 
+  /* ---- print / PDF ---- */
+  @media print{
+    /* 인쇄는 항상 밝은 팔레트로 고정 */
+    :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
+      --ink:#1C2321; --ink-soft:#3E4842; --slate:#5B6560;
+      --paper:#FFFFFF; --surface:#F2F4EF; --surface-2:#E3E7DF; --line:#C7CDC3;
+      --copper:#8B5220; --copper-tint:#E3C8A6; --copper-bg:#F2E6D6; --focus:#8B5220;
+    }
+    *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+    @page{ size:A4; margin:14mm 12mm; }
+    body{ background:#fff; }
+    .wrap{ max-width:none; padding:0; gap:34px; }
+    .hero h1{ font-size:34px; }
+    .lede{ font-size:15px; }
+    .proj h3{ font-size:20px; }
+    .stat .n{ font-size:22px; }
+    .hero-foot{ gap:14px; }
+    .stats{ gap:18px; }
+    /* 요소가 페이지 경계에서 잘리지 않도록 */
+    .cap, .proj, .contrib, figure, .early-item, .cred, .shots{ break-inside:avoid; page-break-inside:avoid; }
+    .sec-label{ break-after:avoid; page-break-after:avoid; }
+    .proj{ break-before:auto; }
+    .proj + .proj{ break-before:page; page-break-before:always; padding-top:0; border-top:none; }
+    section{ break-inside:auto; }
+    /* 화면 전용 장식 정리 */
+    .gh-link{ border-color:var(--line); background:transparent; }
+    a{ color:var(--ink); text-decoration:none; }
+    .pdf-cta{ display:none !important; }
+    figure img{ max-height:78mm; object-fit:contain; object-position:left top; }
+  }
+
   @media (max-width:600px){
     .cap{grid-template-columns:1fr; gap:10px;}
     .shots{grid-template-columns:1fr;}
@@ -226,7 +257,7 @@
       그리고 그것이 정말 작동하는지 확인하는 <b>평가 체계</b>까지 함께 만듭니다.
     </p>
     <div class="hero-foot">
-      <a class="gh-link" href="https://github.com/hippo2coding">↗ github.com/hippo2coding</a>
+      <span style="display:flex;gap:10px;flex-wrap:wrap;"><a class="gh-link" href="https://github.com/hippo2coding">↗ github.com/hippo2coding</a><a class="gh-link pdf-cta" href="portfolio.pdf" download="김성재-포트폴리오.pdf">⤓ PDF</a></span>
       <div class="stats">
         <div class="stat"><span class="n">234</span><span class="l">파이널 커밋 (전체의 40%)</span></div>
         <div class="stat"><span class="n">5</span><span class="l">팀 프로젝트</span></div>
