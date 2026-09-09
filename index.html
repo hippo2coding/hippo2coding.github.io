@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="LLM 애플리케이션 백엔드 개발자 김성재의 포트폴리오 — 에이전트 런타임, RAG 파이프라인, 평가 엔지니어링.">
+<meta name="author" content="김성재 (hippo2coding)">
+<link rel="canonical" href="https://hippo2coding.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hippo2coding.github.io/">
+<meta property="og:title" content="김성재 · hippo2coding">
+<meta property="og:description" content="LLM 애플리케이션 백엔드 개발자 김성재의 포트폴리오 — 에이전트 런타임, RAG 파이프라인, 평가 엔지니어링.">
+<meta property="og:image" content="https://hippo2coding.github.io/assets/slide.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐢</text></svg>">
+<title>김성재 · hippo2coding</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --ink:#1C2321;
+    --ink-soft:#3E4842;
+    --slate:#5B6560;
+    --paper:#ECEFE9;
+    --surface:#E3E7DF;
+    --surface-2:#D8DDD3;
+    --line:#C7CDC3;
+    --copper:#A8642A;
+    --copper-tint:#E3C8A6;
+    --copper-bg:#EFE1CD;
+    --focus:#8B5220;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#EDF0E9;
+      --ink-soft:#C4CBC2;
+      --slate:#939A90;
+      --paper:#141817;
+      --surface:#1D2320;
+      --surface-2:#252C28;
+      --line:#333B34;
+      --copper:#D68A46;
+      --copper-tint:#4A3A26;
+      --copper-bg:#2A2318;
+      --focus:#E8A25F;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#EDF0E9;
+    --ink-soft:#C4CBC2;
+    --slate:#939A90;
+    --paper:#141817;
+    --surface:#1D2320;
+    --surface-2:#252C28;
+    --line:#333B34;
+    --copper:#D68A46;
+    --copper-tint:#4A3A26;
+    --copper-bg:#2A2318;
+    --focus:#E8A25F;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"IBM Plex Sans KR","IBM Plex Sans",system-ui,sans-serif;
+    line-height:1.68; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{text-wrap:balance; margin:0;}
+  p{margin:0;}
+  a{color:var(--copper); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  a:focus-visible{outline:2px solid var(--focus); outline-offset:3px; border-radius:2px;}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;}
+
+  .wrap{max-width:860px; margin:0 auto; padding:60px 24px 80px; display:flex; flex-direction:column; gap:56px;}
+
+  /* ---- section frame ---- */
+  .sec-label{
+    font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--slate); font-weight:600; padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:28px;
+  }
+
+  /* ---- hero ---- */
+  .hero{display:flex; flex-direction:column; gap:20px;}
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace; font-size:12.5px; letter-spacing:.12em;
+    color:var(--copper); font-weight:600;
+  }
+  .hero h1{
+    font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:clamp(38px,6.4vw,56px); line-height:1.1;
+    display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
+  }
+  .hero h1 .handle{font-family:"IBM Plex Mono",monospace; font-weight:500; font-size:0.4em; color:var(--slate);}
+  .lede{font-size:18px; color:var(--ink-soft); max-width:60ch;}
+  .lede b{color:var(--ink); font-weight:600;}
+  .hero-foot{display:flex; flex-wrap:wrap; gap:26px; align-items:flex-end; justify-content:space-between; margin-top:6px;}
+  .gh-link{
+    font-family:"IBM Plex Mono",monospace; font-size:13.5px; font-weight:500;
+    border:1px solid var(--line); border-radius:20px; padding:8px 16px;
+    color:var(--ink); background:var(--surface); display:inline-block;
+  }
+  .gh-link:hover{text-decoration:none; border-color:var(--copper); color:var(--copper);}
+  .stats{display:flex; gap:30px; flex-wrap:wrap;}
+  .stat .n{font-family:"Fraunces",serif; font-weight:600; font-size:27px; display:block; line-height:1.2;}
+  .stat .l{font-size:11.5px; color:var(--slate); font-family:"IBM Plex Mono",monospace;}
+
+  /* ---- capabilities ---- */
+  .caps{display:flex; flex-direction:column; gap:26px;}
+  .cap{display:grid; grid-template-columns:190px 1fr; gap:20px;}
+  .cap h3{
+    font-family:"Fraunces",Georgia,serif; font-size:19px; font-weight:600; color:var(--ink);
+    padding-top:1px;
+  }
+  .cap h3 span{
+    display:block; font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:500;
+    color:var(--copper); letter-spacing:.06em; margin-top:5px;
+  }
+  ul.pts{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:7px;}
+  ul.pts li{position:relative; padding-left:15px; font-size:14.5px; color:var(--ink-soft);}
+  ul.pts li::before{content:"–"; position:absolute; left:0; color:var(--copper);}
+  ul.pts li b{color:var(--ink); font-weight:600;}
+
+  /* ---- featured project ---- */
+  .proj{display:flex; flex-direction:column; gap:16px; padding-bottom:48px;}
+  .proj + .proj{border-top:1px solid var(--line); padding-top:44px;}
+  .proj-head{display:flex; justify-content:space-between; align-items:flex-start; gap:18px; flex-wrap:wrap;}
+  .proj h3{font-family:"Fraunces",Georgia,serif; font-size:26px; font-weight:600; max-width:22ch;}
+  .proj h3 .sub{
+    display:block; font-family:"IBM Plex Mono",monospace; font-size:0.48em; font-weight:500;
+    color:var(--slate); margin-top:6px; letter-spacing:.02em;
+  }
+  .repo-links{display:flex; gap:8px; flex-wrap:wrap;}
+  .repo-link{
+    font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--slate);
+    border:1px solid var(--line); padding:5px 11px; border-radius:16px; white-space:nowrap;
+  }
+  .repo-link:hover{color:var(--copper); border-color:var(--copper); text-decoration:none;}
+  .meta{display:flex; gap:16px; flex-wrap:wrap; font-size:13px; color:var(--slate);}
+  .meta b{color:var(--ink-soft); font-weight:600;}
+  .summary{font-size:15px; color:var(--ink-soft); max-width:62ch;}
+  .summary b{color:var(--ink); font-weight:600;}
+  .role-line{
+    font-size:14.5px; color:var(--ink-soft); background:var(--surface);
+    border-left:2px solid var(--copper); padding:11px 16px; border-radius:0 6px 6px 0;
+  }
+  .role-line b{color:var(--ink); font-weight:600;}
+  .phase{
+    font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.1em; font-weight:600;
+    color:var(--copper); display:block; margin-top:6px;
+  }
+  .phase .sub{color:var(--slate); font-weight:400; letter-spacing:0;}
+
+  /* contribution bars */
+  .contrib{background:var(--surface); border-radius:8px; padding:18px 20px; display:flex; flex-direction:column; gap:11px;}
+  .contrib-h{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.08em; color:var(--slate); text-transform:uppercase;}
+  .bar-row{display:grid; grid-template-columns:112px 1fr 42px; align-items:center; gap:12px; font-size:12.5px;}
+  .bar-row .nm{font-family:"IBM Plex Mono",monospace; color:var(--ink-soft);}
+  .bar-track{background:var(--surface-2); border-radius:3px; height:9px; overflow:hidden;}
+  .bar-fill{background:var(--copper); height:100%; border-radius:3px;}
+  .bar-row .ct{font-family:"IBM Plex Mono",monospace; color:var(--slate); text-align:right; font-variant-numeric:tabular-nums;}
+
+  /* images */
+  .shots{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  figure{margin:0; display:flex; flex-direction:column; gap:7px;}
+  figure img{width:100%; height:auto; display:block; border:1px solid var(--line); border-radius:6px;}
+  figcaption{font-size:11.5px; line-height:1.5; color:var(--slate);}
+  .note{font-size:12.5px; color:var(--slate); border-left:2px solid var(--line); padding-left:12px;}
+
+  .chips{display:flex; flex-wrap:wrap; gap:7px;}
+  .chip{
+    font-family:"IBM Plex Mono",monospace; font-size:12px; padding:4px 10px; border-radius:5px;
+    background:var(--surface); color:var(--ink-soft); border:1px solid var(--line);
+  }
+
+  /* ---- early projects ---- */
+  .arc{font-size:15px; color:var(--ink-soft); max-width:62ch; margin-bottom:26px;}
+  .arc b{color:var(--ink); font-weight:600;}
+  .early{display:flex; flex-direction:column; gap:22px;}
+  .early-item{display:grid; grid-template-columns:88px 1fr; gap:20px; align-items:start;}
+  .early-date{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--slate); padding-top:3px;}
+  .early-body{display:flex; flex-direction:column; gap:7px;}
+  .early-body h4{font-size:16px; font-weight:600;}
+  .early-body h4 a{color:var(--ink);}
+  .early-body h4 a:hover{color:var(--copper);}
+  .early-body p{font-size:14px; color:var(--ink-soft);}
+  .early-role{font-size:13px; color:var(--slate);}
+  .early-role b{color:var(--ink-soft); font-weight:600;}
+
+  /* ---- stack ---- */
+  .stack-grid{display:grid; grid-template-columns:130px 1fr; gap:13px 18px;}
+  .stack-cat{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--slate); padding-top:5px;}
+
+  footer{border-top:1px solid var(--line); padding-top:30px; display:flex; flex-direction:column; gap:12px;}
+  footer p{font-size:13px; color:var(--slate); max-width:64ch;}
+
+  @media (max-width:600px){
+    .cap{grid-template-columns:1fr; gap:10px;}
+    .shots{grid-template-columns:1fr;}
+    .early-item{grid-template-columns:1fr; gap:6px;}
+    .stack-grid{grid-template-columns:1fr; gap:6px 0;}
+    .stack-cat{padding-top:10px;}
+    .bar-row{grid-template-columns:96px 1fr 38px;}
+  }
+</style>
+<style>
+  :root{color-scheme:light dark;}
+  html{-webkit-text-size-adjust:100%;}
+  body{margin:0;}
+  img{max-width:100%;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ══ HERO ══ -->
+  <header class="hero">
+    <p class="eyebrow">SK NETWORKS FAMILY AICAMP 28기 · 2026.03 – 08</p>
+    <h1>김성재 <span class="handle">@hippo2coding</span></h1>
+    <p class="lede">
+      LLM 애플리케이션의 <b>백엔드</b>를 만듭니다. 에이전트 런타임과 RAG 파이프라인,
+      그리고 그것이 정말 작동하는지 확인하는 <b>평가 체계</b>까지 함께 만듭니다.
+    </p>
+    <div class="hero-foot">
+      <a class="gh-link" href="https://github.com/hippo2coding">↗ github.com/hippo2coding</a>
+      <div class="stats">
+        <div class="stat"><span class="n">234</span><span class="l">파이널 커밋 (전체의 40%)</span></div>
+        <div class="stat"><span class="n">5</span><span class="l">팀 프로젝트</span></div>
+        <div class="stat"><span class="n">6</span><span class="l">개월</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ 핵심 역량 ══ -->
+  <section>
+    <h2 class="sec-label">핵심 역량</h2>
+    <div class="caps">
+
+      <div class="cap">
+        <h3>에이전트 런타임<span>AGENT RUNTIME · LLM INFRA</span></h3>
+        <ul class="pts">
+          <li>FastAPI 기반 <b>AgentRunner 런타임 루프</b>와 요청·응답 계약 스키마를 설계하고, 시스템 프롬프트를 외부 주입형 provider로 분리(SSOT)</li>
+          <li>LiteLLM·OpenRouter <b>프로바이더 어댑터</b>와 게이트웨이 페일오버, 페르소나 에이전트 등록·라우팅 구현</li>
+          <li>Logfire로 <b>관측성 계층</b> 구성 — <span class="mono">llm.request</span>·<span class="mono">prompt.load</span> 구간 span, 토큰 사용량과 캐시 히트 계측</li>
+        </ul>
+      </div>
+
+      <div class="cap">
+        <h3>RAG 파이프라인<span>RETRIEVAL &amp; GROUNDING</span></h3>
+        <ul class="pts">
+          <li>SQL(정형)과 Vector(비정형)를 결합한 <b>하이브리드 검색</b>, 검색 실패 시 자동 fallback</li>
+          <li>질문의 의도·대상·경로를 <span class="mono">sql / vector / hybrid / clarify</span>로 분류하는 질문 분석기</li>
+          <li>모든 답변에 <b>출처를 붙이고</b>, 답변해선 안 되는 질문은 정책으로 차단</li>
+        </ul>
+      </div>
+
+      <div class="cap">
+        <h3>평가 · 데이터셋<span>EVALUATION ENGINEERING</span></h3>
+        <ul class="pts">
+          <li>컨텍스트 길이별 <b>cutoff 생성과 사실 생존 판정</b>, QA 문항 생성·응답, 검증 임계값과 리포트 CLI로 이어지는 장기기억 벤치마크 구축</li>
+          <li>변수 하나만 바꾸는 <b>통제 실험 설계</b>와, 체크포인트로 재개 가능한 생성 엔진</li>
+          <li>모델 후보 비교 리포트 작성 (DeepSeek V4 Flash vs Gemma 4 31B)</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ 대표 프로젝트 ══ -->
+  <section>
+    <h2 class="sec-label">대표 프로젝트</h2>
+
+    <!-- DearMate -->
+    <article class="proj">
+      <div class="proj-head">
+        <h3>DearMate<span class="sub">AI 컴패니언 앱 · 멀티서비스 모노레포 · 파이널 프로젝트</span></h3>
+        <div class="repo-links">
+          <a class="repo-link" href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN28-FINAL-3Team">↗ Repo</a>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="mono">2026.06 – 08</span>
+        <span>팀 <b>4인</b></span>
+        <span><b>234 / 580</b> 커밋 (40%) · 2위 기여자</span>
+      </div>
+
+      <p class="summary">
+        React Native(Expo) 앱, Python Agent Backend, 독립 배포되는 A2A(Google ADK) 에이전트, LiteLLM 게이트웨이가
+        각각의 경계를 갖는 모노레포입니다. 저는 <b>에이전트가 실제로 돌아가는 층</b>을 맡았습니다 —
+        런타임과 프로바이더, 그리고 그 품질을 재는 평가 파이프라인.
+      </p>
+
+      <p class="role-line"><b>담당:</b> A2A 에이전트 · Agent Backend(런타임·계약·관측성) · LLM 게이트웨이 · 시스템 프롬프트 · 장기기억 평가</p>
+
+      <div class="contrib">
+        <div class="contrib-h">커밋 234개의 영역 분포</div>
+        <div class="bar-row"><span class="nm">a2a</span><span class="bar-track"><span class="bar-fill" style="width:100%"></span></span><span class="ct">149</span></div>
+        <div class="bar-row"><span class="nm">agent-backend</span><span class="bar-track"><span class="bar-fill" style="width:33%"></span></span><span class="ct">49</span></div>
+        <div class="bar-row"><span class="nm">gateway</span><span class="bar-track"><span class="bar-fill" style="width:4%"></span></span><span class="ct">6</span></div>
+        <div class="bar-row"><span class="nm">system-prompt</span><span class="bar-track"><span class="bar-fill" style="width:3.4%"></span></span><span class="ct">5</span></div>
+        <div class="bar-row"><span class="nm">그 외</span><span class="bar-track"><span class="bar-fill" style="width:17%"></span></span><span class="ct">25</span></div>
+      </div>
+
+      <span class="phase">에이전트 · 인프라</span>
+      <ul class="pts">
+        <li>AgentRunner 런타임 루프, LLM 요청·응답 계약 스키마, FastAPI 부트스트랩과 라우터·관측성 배선</li>
+        <li>페르소나 에이전트를 <b>독립 실행 ADK 런타임</b>으로 분리하고, 게이트웨이 페일오버와 Supabase 기반 페르소나 provider를 연결</li>
+        <li>구독 카탈로그 API와 정책·구독 관리 콘솔까지 운영 기능으로 확장</li>
+      </ul>
+
+      <span class="phase">장기기억 평가 <span class="sub">— 컴패니언이 "기억한다"를 측정 가능하게</span></span>
+      <ul class="pts">
+        <li>긴 시간축의 관계 서사를 담은 한국어 대화 데이터셋 생성 파이프라인 — 대화 5건 × 15만 토큰 규모, 목표 토큰을 20K 파일럿에서 <b>400K 본 생성</b>으로 확장</li>
+        <li>길이별 <b>cutoff 생성과 사실 생존 판정</b>, QA 문항 생성·응답, 검증 리포트 CLI로 "기억이 남았는지"를 수치로 판정</li>
+        <li>배경·제약·시드·시나리오를 고정하고 성격 유형 변수만 바꾼 <b>통제 비교 설계</b>. 경험 원장으로 반복 서술을 막고, 같은 날 상태 충돌은 생성 시점에 반려</li>
+        <li>완료 기준을 파일 크기가 아니라 <b>JSONL·사실 원장·매니페스트 검증 통과</b>로 정의하고, 팀원이 독립 실행하도록 portable 번들로 인계</li>
+      </ul>
+
+      <figure>
+        <img src="assets/slide.jpg" alt="AI 인플루언서 IP가 SNS 콘텐츠와 페르소나 챗봇을 거쳐 IP 경쟁력으로 이어지는 과정을 정리한 기획 슬라이드" loading="lazy">
+        <figcaption>제품 기획 — 페르소나 챗봇을 IP 성장의 핵심 수단으로 정의한 팀 기획 산출물 (선행 연구 4건 인용)</figcaption>
+      </figure>
+
+      <div class="chips">
+        <span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">Google ADK / A2A</span><span class="chip">LiteLLM</span><span class="chip">OpenRouter</span><span class="chip">Logfire</span><span class="chip">Supabase</span><span class="chip">SurrealDB</span><span class="chip">TypeScript</span><span class="chip">React Native</span><span class="chip">Docker</span>
+      </div>
+
+      <p class="note">커밋 수치는 팀 작업 저장소를 전 브랜치 기준으로 집계한 값입니다. 공개 저장소에는 통합 시점까지의 스냅샷(421커밋)만 올라가 있어, 기능 브랜치에 남은 작업은 그곳에서 보이지 않습니다.</p>
+    </article>
+
+    <!-- 넙죽이 -->
+    <article class="proj">
+      <div class="proj-head">
+        <h3>넙죽이 🐢<span class="sub">KAIST AI 학과 안내 RAG 챗봇 · 3차 + 4차 연속 프로젝트</span></h3>
+        <div class="repo-links">
+          <a class="repo-link" href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN28_3RD_2TEAM">↗ 3차</a>
+          <a class="repo-link" href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN28-4TH-2TEAM">↗ 4차</a>
+        </div>
+      </div>
+      <div class="meta">
+        <span class="mono">2026.05 – 06</span>
+        <span>팀 <b>4인</b> (두 차수 동일 팀)</span>
+      </div>
+
+      <p class="summary">
+        여러 공식 페이지와 PDF에 흩어진 KAIST 학과 정보를, <b>출처와 함께</b> 답하는 챗봇.
+        두 차수에 걸쳐 검색 파이프라인을 <b>운영 가능한 웹서비스</b>로 키웠습니다.
+      </p>
+
+      <p class="role-line"><b>담당:</b> RAG 파이프라인 설계·구현 (질문 분석 · 하이브리드 검색) 및 서비스 백엔드 연동</p>
+
+      <span class="phase">3차 <span class="sub">— 하이브리드 RAG 파이프라인</span></span>
+      <ul class="pts">
+        <li>SQL(정형) + Vector(비정형) 검색을 결합하고, 검색 실패나 결과 부족 시 자동 fallback</li>
+        <li>질문 의도·학과·검색 route를 분류하는 질문 분석기와, 애매한 질문용 예시 유사도 매칭</li>
+        <li>개인별 합격 가능성처럼 답변해선 안 되는 질문을 정책적으로 차단</li>
+      </ul>
+
+      <span class="phase">4차 <span class="sub">— Django 정식 서비스로 확장</span></span>
+      <ul class="pts">
+        <li>인증, 대화 세션, 답변 피드백, 게시판·문의, 관리자 통계까지 구현</li>
+        <li>수집 범위를 AI 관련 4개 학과에서 <b>3개 단과대학 · 15개 학과·대학원</b>으로 확대 — 교과목 908 · 교수/연구진 607 · 세미나 439 · 입학/장학 138, 총 <b>2,092건</b> 적재</li>
+        <li>End-to-End 테스트 9건 전 항목 통과 (라우팅, 인증, DB 연동, 예외 처리)</li>
+      </ul>
+
+      <div class="shots">
+        <figure>
+          <img src="assets/chat.jpg" alt="넙죽이 채팅 화면 — 질문에 대한 답변과 근거 문서 출처 카드, 피드백 버튼" loading="lazy">
+          <figcaption>채팅 — 답변마다 근거 문서를 출처 카드와 유사도 점수로 제시</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/admin.jpg" alt="관리자 수집 데이터 현황 대시보드 — KPI 카드와 데이터 구성 차트" loading="lazy">
+          <figcaption>관리자 — 수집 데이터 2,092건의 구성과 단과대학별 비중</figcaption>
+        </figure>
+      </div>
+
+      <div class="chips">
+        <span class="chip">Python</span><span class="chip">LangChain</span><span class="chip">OpenAI API</span><span class="chip">Chroma</span><span class="chip">MySQL</span><span class="chip">Django</span><span class="chip">Streamlit</span><span class="chip">JavaScript</span>
+      </div>
+
+      <p class="note">화면 이미지의 번호 마커는 팀에서 작성한 화면설계서 표기입니다.</p>
+    </article>
+  </section>
+
+  <!-- ══ 앞선 프로젝트 ══ -->
+  <section>
+    <h2 class="sec-label">앞선 프로젝트</h2>
+    <p class="arc">
+      첫 프로젝트에서는 <b>커밋을 하나도 남기지 못했습니다.</b> 협업 방식이 서툴렀고, 맡은 일도 스크립트 단위였습니다.
+      여섯 달 뒤 파이널에서는 580개 커밋 중 <b>234개</b>를 남겼습니다. 그 사이를 채운 두 프로젝트입니다.
+    </p>
+    <div class="early">
+
+      <div class="early-item">
+        <div class="early-date">2026.04</div>
+        <div class="early-body">
+          <h4><a href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN28-2nd-2Team">Netflix 고객 이탈 예측 ↗</a></h4>
+          <p>5개 모델을 비교해 CatBoost를 최종 선정 (F1 0.994 · ROC-AUC 0.9999). SHAP으로 이탈에 영향이 큰 피처를 해석하고, Accuracy 대신 Recall·F1 중심으로 평가 기준을 잡았습니다.</p>
+          <p class="early-role"><b>담당</b> 머신러닝 모델 개발 및 성능 평가 · 팀 5인</p>
+        </div>
+      </div>
+
+      <div class="early-item">
+        <div class="early-date">2026.03</div>
+        <div class="early-body">
+          <h4><a href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN28-1st-2team">주차장 검색 &amp; 지역 수급 분석 ↗</a></h4>
+          <p>공공데이터의 자동차 등록 대수와 주차 면수를 비교해 지역별 수급 불균형을 시각화하고, 리뷰 텍스트 키워드를 정량 데이터와 결합한 혼잡도 지수를 만들었습니다.</p>
+          <p class="early-role"><b>담당</b> 데이터 수집·전처리, 자동차 등록 데이터 가공 · 팀 5인</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ 기술 스택 ══ -->
+  <section>
+    <h2 class="sec-label">기술 스택</h2>
+    <div class="stack-grid">
+      <div class="stack-cat">LANGUAGE</div>
+      <div class="chips">
+        <span class="chip">Python</span><span class="chip">TypeScript</span><span class="chip">JavaScript</span><span class="chip">SQL</span>
+      </div>
+      <div class="stack-cat">LLM · AGENT</div>
+      <div class="chips">
+        <span class="chip">Google ADK / A2A</span><span class="chip">LangChain</span><span class="chip">LiteLLM</span><span class="chip">OpenAI API</span><span class="chip">OpenRouter</span><span class="chip">RAG</span><span class="chip">Chroma</span>
+      </div>
+      <div class="stack-cat">BACKEND</div>
+      <div class="chips">
+        <span class="chip">FastAPI</span><span class="chip">Django</span><span class="chip">Pydantic</span><span class="chip">Streamlit</span>
+      </div>
+      <div class="stack-cat">DATA · ML</div>
+      <div class="chips">
+        <span class="chip">Pandas</span><span class="chip">Scikit-learn</span><span class="chip">CatBoost</span><span class="chip">XGBoost</span><span class="chip">LightGBM</span><span class="chip">SHAP</span>
+      </div>
+      <div class="stack-cat">INFRA · OPS</div>
+      <div class="chips">
+        <span class="chip">Supabase</span><span class="chip">MySQL</span><span class="chip">SurrealDB</span><span class="chip">Docker</span><span class="chip">Logfire</span><span class="chip">Git</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>다섯 프로젝트 모두 2026년 3월부터 8월까지 SK Networks Family AICAMP 28기 과정에서 진행한 팀 프로젝트입니다. 커밋 수치는 저장소 이력을 직접 집계한 값입니다.</p>
+    <a class="gh-link" href="https://github.com/hippo2coding">↗ github.com/hippo2coding</a>
+  </footer>
+
+</div>
+</body>
+</html>
