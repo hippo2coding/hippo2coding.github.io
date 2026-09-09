@@ -189,6 +189,12 @@
   .stack-grid{display:grid; grid-template-columns:130px 1fr; gap:13px 18px;}
   .stack-cat{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--slate); padding-top:5px;}
 
+  /* ---- credential ---- */
+  .cred{display:grid; grid-template-columns:auto 1fr; gap:9px 20px; background:var(--surface); border-radius:8px; padding:20px 22px;}
+  .cred dt{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--slate); letter-spacing:.06em; padding-top:2px;}
+  .cred dd{margin:0; font-size:14px; color:var(--ink-soft);}
+  .cred dd b{color:var(--ink); font-weight:600;}
+
   footer{border-top:1px solid var(--line); padding-top:30px; display:flex; flex-direction:column; gap:12px;}
   footer p{font-size:13px; color:var(--slate); max-width:64ch;}
 
@@ -213,7 +219,7 @@
 
   <!-- ══ HERO ══ -->
   <header class="hero">
-    <p class="eyebrow">SK NETWORKS FAMILY AICAMP 28기 · 2026.02.26 – 08.21</p>
+    <p class="eyebrow">SK NETWORKS FAMILY AI CAMP 28기 · 2026.02.26 – 08.21 수료</p>
     <h1>김성재 <span class="handle">@hippo2coding</span></h1>
     <p class="lede">
       LLM 애플리케이션의 <b>백엔드</b>를 만듭니다. 에이전트 런타임과 RAG 파이프라인,
@@ -224,7 +230,7 @@
       <div class="stats">
         <div class="stat"><span class="n">234</span><span class="l">파이널 커밋 (전체의 40%)</span></div>
         <div class="stat"><span class="n">5</span><span class="l">팀 프로젝트</span></div>
-        <div class="stat"><span class="n">6</span><span class="l">개월</span></div>
+        <div class="stat"><span class="n">960</span><span class="l">교육 이수 시간</span></div>
       </div>
     </div>
   </header>
@@ -286,6 +292,7 @@
         React Native(Expo) 앱, Python Agent Backend, 독립 배포되는 A2A(Google ADK) 에이전트, LiteLLM 게이트웨이가
         각각의 경계를 갖는 모노레포입니다. 저는 <b>에이전트가 실제로 돌아가는 층</b>을 맡았습니다 —
         런타임과 프로바이더, 그리고 그 품질을 재는 평가 파이프라인.
+        과정 수료증에 <b>Project : 지훈</b>으로 등재된 최종 프로젝트입니다.
       </p>
 
       <p class="role-line"><b>담당:</b> A2A 에이전트 · Agent Backend(런타임·계약·관측성) · LLM 게이트웨이 · 시스템 프롬프트 · 장기기억 평가</p>
@@ -424,7 +431,7 @@
       </div>
       <div class="stack-cat">BACKEND</div>
       <div class="chips">
-        <span class="chip">FastAPI</span><span class="chip">Django</span><span class="chip">Pydantic</span><span class="chip">Streamlit</span>
+        <span class="chip">FastAPI</span><span class="chip">Django</span><span class="chip">Pydantic AI</span><span class="chip">Streamlit</span>
       </div>
       <div class="stack-cat">DATA · ML</div>
       <div class="chips">
@@ -432,9 +439,26 @@
       </div>
       <div class="stack-cat">INFRA · OPS</div>
       <div class="chips">
-        <span class="chip">Supabase</span><span class="chip">MySQL</span><span class="chip">SurrealDB</span><span class="chip">Docker</span><span class="chip">Logfire</span><span class="chip">Git</span>
+        <span class="chip">Supabase</span><span class="chip">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">SurrealDB</span><span class="chip">Docker</span><span class="chip">Logfire</span><span class="chip">Git</span>
       </div>
     </div>
+  </section>
+
+  <!-- ══ 교육 이수 ══ -->
+  <section>
+    <h2 class="sec-label">교육 이수</h2>
+    <dl class="cred">
+      <dt>과정</dt>
+      <dd><b>SK네트웍스 Family AI 캠프</b> 28기 — SK네트웍스 · en·core</dd>
+      <dt>분야</dt>
+      <dd>인공지능 모델링 · <b>LLM 기반 AI SW/서비스 개발</b></dd>
+      <dt>기간</dt>
+      <dd>2026.02.26 – 2026.08.21 · <b>960시간</b></dd>
+      <dt>최종 프로젝트</dt>
+      <dd>LLM 활용 인공지능 인플루언서 만들기 — <b>Project : 지훈</b> · 백엔드 개발, AI 모델 개발, DB 및 시스템 설계</dd>
+      <dt>인증</dt>
+      <dd>고용노동부 <b>K-Digital Training</b> 수료 (2026.08.21)</dd>
+    </dl>
   </section>
 
   <footer>
