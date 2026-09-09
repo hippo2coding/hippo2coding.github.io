@@ -199,7 +199,6 @@
   footer p{font-size:13px; color:var(--slate); max-width:64ch;}
 
   /* ---- print / PDF ---- */
-  .print-foot{display:none;}
   @media print{
     /* 인쇄는 항상 밝은 팔레트로 고정 */
     :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
@@ -208,7 +207,7 @@
       --copper:#8B5220; --copper-tint:#E3C8A6; --copper-bg:#F2E6D6; --focus:#8B5220;
     }
     *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
-    @page{ size:A4; margin:14mm 12mm 16mm; }
+    @page{ size:A4; margin:14mm 12mm; }
     body{ background:#fff; }
 
     /* 페이지 구성: 1)표지+역량  2)DearMate  3)넙죽이  4)나머지 */
@@ -261,14 +260,6 @@
     .early-body p{ font-size:13.5px; }
     .stack-grid{ gap:9px 18px; }
     footer .gh-link{ display:none; }
-
-    /* 모든 페이지 하단에 반복되는 러닝 푸터 */
-    .print-foot{
-      display:block; position:fixed; bottom:-11mm; left:0; right:0;
-      font-family:"IBM Plex Mono",monospace; font-size:8.5pt; color:var(--slate);
-      border-top:1px solid var(--line); padding-top:2.5mm;
-      display:flex; justify-content:space-between;
-    }
   }
   @media (max-width:600px){
     .cap{grid-template-columns:1fr; gap:10px;}
@@ -538,11 +529,6 @@
     <a class="gh-link" href="https://github.com/hippo2coding">↗ github.com/hippo2coding</a>
   </footer>
 
-</div>
-
-<div class="print-foot" aria-hidden="true">
-  <span>김성재 · hippo2coding</span>
-  <span>hippo2coding.github.io</span>
 </div>
 </body>
 </html>
