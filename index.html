@@ -199,36 +199,77 @@
   footer p{font-size:13px; color:var(--slate); max-width:64ch;}
 
   /* ---- print / PDF ---- */
+  .print-foot{display:none;}
   @media print{
     /* 인쇄는 항상 밝은 팔레트로 고정 */
     :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
       --ink:#1C2321; --ink-soft:#3E4842; --slate:#5B6560;
-      --paper:#FFFFFF; --surface:#F2F4EF; --surface-2:#E3E7DF; --line:#C7CDC3;
+      --paper:#FFFFFF; --surface:#F3F5F0; --surface-2:#E3E7DF; --line:#C7CDC3;
       --copper:#8B5220; --copper-tint:#E3C8A6; --copper-bg:#F2E6D6; --focus:#8B5220;
     }
     *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
-    @page{ size:A4; margin:14mm 12mm; }
+    @page{ size:A4; margin:14mm 12mm 16mm; }
     body{ background:#fff; }
-    .wrap{ max-width:none; padding:0; gap:34px; }
-    .hero h1{ font-size:34px; }
-    .lede{ font-size:15px; }
-    .proj h3{ font-size:20px; }
-    .stat .n{ font-size:22px; }
-    .hero-foot{ gap:14px; }
-    .stats{ gap:18px; }
-    /* 요소가 페이지 경계에서 잘리지 않도록 */
-    .cap, .proj, .contrib, figure, .early-item, .cred, .shots{ break-inside:avoid; page-break-inside:avoid; }
-    .sec-label{ break-after:avoid; page-break-after:avoid; }
-    .proj{ break-before:auto; }
-    .proj + .proj{ break-before:page; page-break-before:always; padding-top:0; border-top:none; }
-    section{ break-inside:auto; }
-    /* 화면 전용 장식 정리 */
-    .gh-link{ border-color:var(--line); background:transparent; }
-    a{ color:var(--ink); text-decoration:none; }
-    .pdf-cta{ display:none !important; }
-    figure img{ max-height:78mm; object-fit:contain; object-position:left top; }
-  }
 
+    /* 페이지 구성: 1)표지+역량  2)DearMate  3)넙죽이  4)나머지 */
+    .wrap{ max-width:none; padding:0; gap:0; display:block; }
+    #sec-featured, #sec-early{ break-before:page; page-break-before:always; }
+    .proj + .proj{ break-before:page; page-break-before:always; padding-top:0; border-top:none; }
+    .proj{ padding-bottom:0; }
+    section{ margin-top:22px; }
+    #sec-featured, #sec-early{ margin-top:0; }
+    #sec-stack, #sec-cred{ margin-top:24px; }
+
+    /* 잘리면 안 되는 단위 */
+    .cap, .contrib, figure, .early-item, .cred, .shots, .role-line{ break-inside:avoid; page-break-inside:avoid; }
+    ul.pts{ break-inside:avoid; page-break-inside:avoid; }
+    .sec-label, .phase, .proj-head{ break-after:avoid; page-break-after:avoid; }
+
+    /* 인쇄 밀도 */
+    .hero{ gap:18px; }
+    .hero h1{ font-size:38px; }
+    .lede{ font-size:15.5px; }
+    .hero-foot{ gap:14px; margin-top:2px; }
+    .stats{ gap:18px; }
+    .stat .n{ font-size:21px; }
+    .caps{ gap:25px; }
+    .proj{ gap:12px; }
+    .proj h3{ font-size:21px; }
+    .summary, .role-line{ font-size:14px; }
+    .role-line{ padding:9px 14px; }
+    ul.pts li{ font-size:13.5px; }
+    .contrib{ padding:14px 16px; gap:9px; }
+    .chip{ font-size:11px; padding:3px 8px; }
+    .note{ font-size:11px; }
+    figcaption{ font-size:10.5px; }
+    .sec-label{ margin-bottom:13px; padding-bottom:8px; }
+
+    /* 이미지가 페이지를 넘기지 않도록 */
+    .print-break{ break-before:page; page-break-before:always; }
+    figure img{ max-height:92mm; object-fit:contain; object-position:left top; }
+    .shots figure img{ max-height:68mm; }
+
+    /* 화면 전용 요소 정리 */
+    a{ color:var(--ink); text-decoration:none; }
+    .gh-link{ border-color:var(--line); background:transparent; }
+    .pdf-cta{ display:none !important; }
+    footer{ margin-top:16px; padding-top:14px; }
+    .early{ gap:15px; }
+    .arc{ font-size:13.5px; margin-bottom:16px; }
+    .cred{ padding:14px 16px; gap:7px 18px; }
+    .cred dd{ font-size:13.5px; }
+    .early-body p{ font-size:13.5px; }
+    .stack-grid{ gap:9px 18px; }
+    footer .gh-link{ display:none; }
+
+    /* 모든 페이지 하단에 반복되는 러닝 푸터 */
+    .print-foot{
+      display:block; position:fixed; bottom:-11mm; left:0; right:0;
+      font-family:"IBM Plex Mono",monospace; font-size:8.5pt; color:var(--slate);
+      border-top:1px solid var(--line); padding-top:2.5mm;
+      display:flex; justify-content:space-between;
+    }
+  }
   @media (max-width:600px){
     .cap{grid-template-columns:1fr; gap:10px;}
     .shots{grid-template-columns:1fr;}
@@ -267,7 +308,7 @@
   </header>
 
   <!-- ══ 핵심 역량 ══ -->
-  <section>
+  <section id="sec-caps">
     <h2 class="sec-label">핵심 역량</h2>
     <div class="caps">
 
@@ -302,7 +343,7 @@
   </section>
 
   <!-- ══ 대표 프로젝트 ══ -->
-  <section>
+  <section id="sec-featured">
     <h2 class="sec-label">대표 프로젝트</h2>
 
     <!-- DearMate -->
@@ -344,7 +385,7 @@
         <li>구독 카탈로그 API와 정책·구독 관리 콘솔까지 운영 기능으로 확장</li>
       </ul>
 
-      <span class="phase">장기기억 평가 <span class="sub">— 컴패니언이 "기억한다"를 측정 가능하게</span></span>
+      <span class="phase print-break">장기기억 평가 <span class="sub">— 컴패니언이 "기억한다"를 측정 가능하게</span></span>
       <ul class="pts">
         <li>긴 시간축의 관계 서사를 담은 한국어 대화 데이터셋 생성 파이프라인 — 대화 5건 × 15만 토큰 규모, 목표 토큰을 20K 파일럿에서 <b>400K 본 생성</b>으로 확장</li>
         <li>길이별 <b>cutoff 생성과 사실 생존 판정</b>, QA 문항 생성·응답, 검증 리포트 CLI로 "기억이 남았는지"를 수치로 판정</li>
@@ -419,7 +460,7 @@
   </section>
 
   <!-- ══ 앞선 프로젝트 ══ -->
-  <section>
+  <section id="sec-early">
     <h2 class="sec-label">앞선 프로젝트</h2>
     <p class="arc">
       첫 프로젝트에서는 <b>커밋을 하나도 남기지 못했습니다.</b> 협업 방식이 서툴렀고, 맡은 일도 스크립트 단위였습니다.
@@ -449,7 +490,7 @@
   </section>
 
   <!-- ══ 기술 스택 ══ -->
-  <section>
+  <section id="sec-stack">
     <h2 class="sec-label">기술 스택</h2>
     <div class="stack-grid">
       <div class="stack-cat">LANGUAGE</div>
@@ -476,7 +517,7 @@
   </section>
 
   <!-- ══ 교육 이수 ══ -->
-  <section>
+  <section id="sec-cred">
     <h2 class="sec-label">교육 이수</h2>
     <dl class="cred">
       <dt>과정</dt>
@@ -497,6 +538,11 @@
     <a class="gh-link" href="https://github.com/hippo2coding">↗ github.com/hippo2coding</a>
   </footer>
 
+</div>
+
+<div class="print-foot" aria-hidden="true">
+  <span>김성재 · hippo2coding</span>
+  <span>hippo2coding.github.io</span>
 </div>
 </body>
 </html>
